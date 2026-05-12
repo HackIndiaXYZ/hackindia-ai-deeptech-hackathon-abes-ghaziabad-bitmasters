@@ -30,27 +30,21 @@ JDAlign is a web-based tool that analyzes your resume against a job description 
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/YOUR_USERNAME/JDAlign.git
-cd JDAlign
+git clone https://github.com/HackIndiaXYZ/hackindia-ai-deeptech-hackathon-abes-ghaziabad-bitmasters.git
+cd hackindia-ai-deeptech-hackathon-abes-ghaziabad-bitmasters
 ```
 
-2. Create a virtual environment (optional but recommended):
-```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-```
-
-3. Install dependencies:
+2. Install dependencies:
 ```bash
 pip install -r requirements.txt
 ```
 
-4. Run the application:
+3. Run the application:
 ```bash
 python app.py
 ```
 
-5. Open your browser and navigate to:
+4. Open your browser and navigate to:
 ```
 http://localhost:5000
 ```
@@ -67,50 +61,11 @@ http://localhost:5000
    - Experience level comparison
    - Keywords found
 
-## Project Structure
-
-```
-JDAlign/
-├── app.py              # Main Flask application
-├── requirements.txt    # Python dependencies
-├── nlp/
-│   ├── analyzer.py    # JD and resume analysis
-│   └── optimizer.py   # Resume optimization logic
-├── utils/
-│   └── pdf_handler.py # PDF text extraction
-├── themes/
-│   └── __init__.py   # PDF report generation
-├── templates/
-│   └── index.html    # Frontend HTML
-└── static/
-    ├── style.css     # Styling
-    └── script.js     # Frontend JavaScript
-```
-
-## Technologies Used
+## Tech Stack
 
 - **Backend**: Flask (Python)
 - **PDF Processing**: pdfplumber, pdfme, fpdf
 - **Frontend**: HTML, CSS, JavaScript
-- **Deployment**: Ready for cloud deployment (Render, Railway, etc.)
-
-## Deployment
-
-### Deploy to Render (Recommended - Free Tier)
-
-1. Push your code to GitHub
-2. Create a free account at [render.com](https://render.com)
-3. Create a new Web Service:
-   - Connect your GitHub repository
-   - Set build command: `pip install -r requirements.txt`
-   - Set start command: `python app.py`
-   - Choose free tier
-
-### Deploy to Railway
-
-1. Push your code to GitHub
-2. Create a free account at [railway.app](https://railway.app)
-3. Deploy from GitHub and select your repository
 
 ## Version
 
@@ -120,10 +75,6 @@ JDAlign/
 
 This project is licensed under the MIT License.
 
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
 ---
 
-Built with ❤️ for job seekers
+Built with ❤️ for job seekers | HackIndia AI DeepTech Hackathon - BitMasters
