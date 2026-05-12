@@ -49,7 +49,7 @@ jobs:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     steps:
       - name: Deploy to Render
-        uses: renderhq/deploy-action@v1
+        uses: johnbeynon/render-deploy-action@v0.0.8
         with:
-          serviceId: ${{ secrets.RENDER_SERVICE_ID }}
-          apiKey: ${{ secrets.RENDER_API_KEY }}
+          service-id: "srv-d81pdereo5us73afkbbg"
+          api-key: "rnd_mxE08ckiUIVl7xvsvWivcArPLeeq"
