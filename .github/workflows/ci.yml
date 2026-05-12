@@ -42,3 +42,14 @@ jobs:
           python -m py_compile nlp/analyzer.py
           python -m py_compile nlp/optimizer.py
           echo "✓ All Python files have valid syntax"
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    steps:
+      - name: Deploy to Render
+        uses: renderhq/deploy-action@v1
+        with:
+          serviceId: ${{ secrets.RENDER_SERVICE_ID }}
+          apiKey: ${{ secrets.RENDER_API_KEY }}
