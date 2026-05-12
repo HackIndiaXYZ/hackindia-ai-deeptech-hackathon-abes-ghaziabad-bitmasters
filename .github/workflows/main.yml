@@ -11,8 +11,8 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Deploy to Render via API
-        run: |
-          curl -X POST https://api.render.com/v1/services/srv-d81pdereo5us73afkbbg/deploys \
-               -H "Authorization: Bearer rnd_mxE08ckiUIVl7xvsvWivcArPLeeq" \
-               -H "Accept: application/json"
+      - name: Deploy to Render
+        uses: johnbeynon/render-deploy-action@v0.0.8
+        with:
+          service-id: "srv-d81pdereo5us73afkbbg"
+          api-key: "rnd_mxE08ckiUIVl7xvsvWivcArPLeeq"
