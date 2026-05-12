@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JDAlign - Resume Optimizer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-left">
+                <div class="logo">
+                    <span class="logo-icon">◈</span>
+                    <h1>JDAlign</h1>
+                </div>
+                <p class="tagline">Optimize your resume for any job</p>
+            </div>
+            <div class="header-right">
+                <button id="theme-toggle" class="theme-toggle" title="Toggle theme">
+                    <span class="theme-icon light-icon">☀</span>
+                    <span class="theme-icon dark-icon hidden">☾</span>
+                </button>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <!-- Resume Input -->
+            <section class="input-section">
+                <div class="section-header">
+                    <h2>Your Resume</h2>
+                </div>
+                <div class="input-card">
+                    <div id="text-input" class="input-type active">
+                        <div class="card-header">
+                            <span>Paste Resume Text</span>
+                            <span class="char-count" id="resume-chars">0 chars</span>
+                        </div>
+                        <textarea id="resume-input" placeholder="Paste your resume text here...
+
+Example:
+John Doe
+Senior Software Engineer
+john@example.com | (555) 123-4567
+
+Summary:
+Experienced software engineer with 5+ years building scalable applications.
+
+Skills:
+- Python, JavaScript, React, AWS, Docker
+
+Experience:
+- Senior Engineer at Tech Corp (2020-Present)
+- Software Engineer at StartupXYZ (2018-2020)
+
+Education:
+- BS Computer Science, MIT, 2018
+
+Projects:
+- E-commerce Platform - Built with React and Node.js
+
+Certifications:
+- AWS Certified Solutions Architect"></textarea>
+                    </div>
+                    <div id="pdf-input" class="input-type">
+                        <div class="pdf-upload-section">
+                            <div class="upload-icon-large">📄</div>
+                            <h3>Upload Your Resume (PDF)</h3>
+                            <p>Click to select a PDF file from your computer</p>
+                            <label class="pdf-upload-btn">
+                                <span>Choose PDF File</span>
+                                <input type="file" id="pdf-upload" accept=".pdf" hidden>
+                            </label>
+                            <p class="upload-hint">Maximum file size: 10MB</p>
+                        </div>
+                        <div id="pdf-preview-box" class="pdf-preview-box hidden">
+                            <div class="pdf-info">
+                                <span class="pdf-icon">📄</span>
+                                <div class="pdf-details">
+                                    <span id="pdf-name">filename.pdf</span>
+                                    <span id="pdf-size">0 KB</span>
+                                </div>
+                            </div>
+                            <button id="change-pdf-btn" class="change-btn">Change</button>
+                            <button id="remove-pdf-btn" class="remove-btn">✕</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-type-tabs">
+                    <button class="type-tab active" data-type="text">📝 Paste Text</button>
+                    <button class="type-tab" data-type="pdf">📎 Upload PDF</button>
+                </div>
+            </section>
+
+            <!-- Job Description -->
+            <section class="input-section">
+                <div class="section-header">
+                    <h2>Job Description</h2>
+                </div>
+                <div class="input-card">
+                    <div class="card-header">
+                        <span>Paste Job Description</span>
+                        <span class="char-count" id="jd-chars">0 chars</span>
+                    </div>
+                    <textarea id="jd-input" placeholder="Paste the job description here...
+
+Example:
+We are looking for a Senior Software Engineer.
+
+Requirements:
+- 3+ years of experience with Python and REST APIs
+- Experience with AWS, Kubernetes, and microservices
+- Strong problem-solving and communication skills
+- Experience with CI/CD pipelines
+- Bachelor's degree in Computer Science
+
+Preferred:
+- Experience with React and modern JavaScript
+- Database design and SQL knowledge"></textarea>
+                </div>
+            </section>
+
+            <!-- Action -->
+            <div class="action-section">
+                <button id="analyze-btn" class="analyze-btn">
+                    <span class="btn-text">Analyze & Optimize Resume</span>
+                    <span class="btn-loader hidden"></span>
+                </button>
+            </div>
+
+            <div id="error-message" class="error-message hidden"></div>
+
+            <!-- Results -->
+            <div id="results-section" class="results-section hidden">
+                <!-- Score -->
+                <div class="score-section">
+                    <div class="score-circle">
+                        <svg viewBox="0 0 36 36">
+                            <path class="score-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                            <path class="score-fill" id="confidence-path" stroke-dasharray="0, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                        </svg>
+                        <span class="score-value" id="stat-confidence">0%</span>
+                    </div>
+                    <div class="score-info">
+                        <h3>Resume Match Score</h3>
+                        <p id="score-message">Analyzing...</p>
+                    </div>
+                </div>
+
+                <!-- Detailed Analysis -->
+                <div class="comparison-section">
+                    <h3>📊 Detailed Comparison Analysis</h3>
+
+                    <!-- Overall Stats -->
+                    <div class="stats-row">
+                        <div class="stat-mini">
+                            <span class="stat-mini-value" id="req-match">0%</span>
+                            <span class="stat-mini-label">Requirements Match</span>
+                        </div>
+                        <div class="stat-mini">
+                            <span class="stat-mini-value" id="skills-match">0%</span>
+                            <span class="stat-mini-label">Skills Match</span>
+                        </div>
+                        <div class="stat-mini">
+                            <span class="stat-mini-value" id="kw-density">0%</span>
+                            <span class="stat-mini-label">Keyword Density</span>
+                        </div>
+                    </div>
+
+                    <!-- Skills Breakdown -->
+                    <div class="comparison-card">
+                        <h4>🔧 Skills Breakdown</h4>
+                        <div class="skills-grid">
+                            <div class="skills-col">
+                                <h5>✓ You Have</h5>
+                                <div class="skills-list" id="skills-have"></div>
+                            </div>
+                            <div class="skills-col">
+                                <h5>✗ You Need</h5>
+                                <div class="skills-list" id="skills-need"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Experience Analysis -->
+                    <div class="comparison-card">
+                        <h4>💼 Experience Analysis</h4>
+                        <div class="experience-info" id="experience-info"></div>
+                    </div>
+
+                    <!-- Requirements Match -->
+                    <div class="comparison-card">
+                        <h4>📋 Requirements Status</h4>
+                        <div class="requirements-box">
+                            <div class="req-section">
+                                <h5 class="green">✓ Matched Requirements</h5>
+                                <div id="matched-req"></div>
+                            </div>
+                            <div class="req-section">
+                                <h5 class="red">✗ Missing Requirements</h5>
+                                <div id="missing-req"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Action Verbs -->
+                    <div class="comparison-card">
+                        <h4>⚡ Action Verbs Analysis</h4>
+                        <div class="verbs-box">
+                            <div class="verb-col">
+                                <h5>✓ You Use</h5>
+                                <div id="verbs-have"></div>
+                            </div>
+                            <div class="verb-col">
+                                <h5>✗ Add These</h5>
+                                <div id="verbs-need"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Education & Certs -->
+                    <div class="comparison-card">
+                        <h4>🎓 Education & Certifications</h4>
+                        <div id="edu-certs-info"></div>
+                    </div>
+
+                    <!-- Keywords -->
+                    <div class="comparison-card">
+                        <h4>🔑 Keywords Found</h4>
+                        <div class="keywords-cloud" id="keywords-list"></div>
+                    </div>
+                </div>
+
+                <!-- Downloads -->
+                <div class="download-section">
+                    <button id="download-report-btn" class="download-btn report-btn" disabled>
+                        📊 Download Analysis Report (PDF)
+                    </button>
+                    <div class="coming-soon-wrapper">
+                        <button id="download-resume-btn" class="download-btn resume-btn coming-soon" disabled>
+                            📄 Download Optimized Resume (PDF)
+                        </button>
+                        <span class="coming-soon-badge">Coming Soon v1.0</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>JDAlign v1.0 - Optimizing resumes for ATS systems</p>
+            <p class="footer-tagline">Built with ❤️ for job seekers</p>
+        </footer>
+    </div>
+
+    <div id="toast" class="toast hidden"></div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
