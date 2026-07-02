@@ -17,7 +17,7 @@ JDAlign is a web-based tool that analyzes your resume against a job description 
   - Keywords density
   - Action verbs analysis
 - **Dark/Light Mode**: Toggle between themes for comfortable viewing
-- **PDF Reports**: Download detailed analysis reports
+- **PDF Reports**: Download the detailed analysis reports
 
 ## Getting Started
 
@@ -78,7 +78,7 @@ This project is licensed under the MIT License.
 ---
 
 ## Team Members
-- Prateeek Goswami 
+- Prateeek Goswami
 - Siddhi Rastogi
 - Anmol Tiwari
 
