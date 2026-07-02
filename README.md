@@ -77,4 +77,9 @@ This project is licensed under the MIT License.
 
 ---
 
+## Team Members
+- Prateeek Goswami 
+- Siddhi Rastogi
+- Anmol Tiwari
+
 Built with ❤️ for job seekers | HackIndia AI DeepTech Hackathon - BitMasters
